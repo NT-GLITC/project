@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentinho</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+    <div class="sidebar" id="sidebar">
+        <a href="index.html">Home</a>
+        <a href="jackpott.html">Teste sua sorte ❤️</a>
+    </div>
+    <div class="main-content" id="main-content">
+        <h1>Bem-vinda meu amor</h1>
+        <p>Hoje é um dia especial... hoje é o dia que uma menina loirinha de 1.58 mudou minha vida e me fez feliz de um jeito que jamais poderia imaginar, toda vez que penso em vc um sorriso vem ao meu rosto </p>
+        <p>nunca vou deixar de adimirar uma menina tão ncrível quanto você, uma joia rara no meio de um mundo em ruínas, aqui estão um dos nossos momentos mais precioso que ouro</p><br>
+        <div class="carousel">
+            <div class="carousel-slide" id="carousel-slide">
+                <div class="carousel-item">
+                    <img src="image1.jpeg" height="600px" alt="Descrição 1">
+                    <p>"Lembra aqule tempo amor, quando a gente se encontrou? foi assim que começou minha felicidade"</p>
+                </div>
+                <div class="carousel-item">
+                    <img src="image2.jpeg" height="600px" alt="Descrição 2">
+                    <p>Nosso um ano de namoro, lembro desse dia como se fosse ontem, eu amei cada momento dele e de ver você tão feliz, quero fazer cada um ser melhro que o anterior, sempre vou lembrar desse dia.</p>
+                </div>
+                <div class="carousel-item">
+                    <img src="image3.jpeg" height="600px" alt="Descrição 3">
+                    <p>Um dos dias mais divertidos da minha vida, eu adorei trazer uma pessoa especial para um lugar tão especial para mim, tudo ao seu lado fica muito mais divertido</p>
+                    <p>ao seu lado me sinto confortável e feliz, eu amo o jeito que você faz me sentir, amo amar você</p>
+                </div>
+                <div class="carousel-item">
+                    <img src="image4.jpeg" height="600px" alt="Descrição 4">
+                    <p>Nenhuma música do mundo inteiro, consegue ser mais linda que sua voz, passaria minha via inteira ouvindo ela sem cansar</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('main-content');
+            if (sidebar.classList.contains('active-sidebar')) {
+                sidebar.classList.remove('active-sidebar');
+                mainContent.classList.remove('active');
+            } else {
+                sidebar.classList.add('active-sidebar');
+                mainContent.classList.add('active');
+            }
+        }
+
+        // Simple carousel functionality
+        let currentIndex = 0;
+        const slides = document.querySelectorAll('.carousel-item');
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.style.display = i === index ? 'block' : 'none';
+            });
+        }
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % slides.length;
+            showSlide(currentIndex);
+        }
+
+        // Initial display
+        showSlide(currentIndex);
+        setInterval(nextSlide, 10000); // Change slide every 30 seconds
+    </script>
+</body>
+</html>

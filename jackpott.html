@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jackpott</title>
+    <style>
+        body {
+            zoom: 1.10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            color: #fff;
+            background-image: url('background.png');
+            background-size: 150px 150px;
+        }
+        .slot-machine {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .slot {
+            width: 100px;
+            height: 100px;
+            margin: 0 10px;
+            background-color: #444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            border-radius: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+            background-color: #f76c6c;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+        }
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            display: none;
+            color: #fff;
+        }
+        .popup h2 {
+            margin-bottom: 15px;
+        }
+        .popup ul {
+            list-style: none;
+            padding: 0;
+        }
+        .popup li {
+            margin: 5px 0;
+        }
+        .counter {
+            position: fixed;
+            top: 10px;
+            right: 20px;
+            font-size: 1.5em;
+        }
+        .prize-window {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #444;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            display: none;
+            color: #fff;
+        }
+        .prize-window h2 {
+            margin-bottom: 20px;
+        }
+        .prize-window button {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="counter" id="counter">Contador: 0</div>
+    <h1>Máquina de Cassino</h1>
+    <div class="popup" id="prizePopup">
+        <h2>Premiações</h2>
+        <ul>
+            <li>1. 🍒: video ou áudio moaning</li>
+            <li>2. 🔔: Foto de sua escolha</li>
+            <li>3. ⭐: Foto do popo</li>
+            <li>4. 🍋: Um pedido</li>
+            <li>5. 🍉: Jantar a luz de telas</li>
+            <li>6. 7️⃣: Balada no Just Dance</li>
+            <li>2 símbolos iguais: Parabéns, prêmio menor!</li>
+            <li>0 símbolos iguais: Tente novamente!</li>
+        </ul>
+        <button onclick="closePopup()">Fechar</button>
+    </div>
+    <div class="slot-machine" id="slots">
+        <div class="slot" id="slot1">?</div>
+        <div class="slot" id="slot2">?</div>
+        <div class="slot" id="slot3">?</div>
+    </div>
+    <button onclick="showPopup()">Ver Premiações</button><br>
+    <button onclick="playSlotMachine()">Girar</button>
+
+    <div class="prize-window" id="prizeWindow">
+        <h2>Premiação Especial</h2>
+        <ul>
+            <li>1. 🍒: video ou áudio moaning</li>
+            <li>2. 🔔: Foto de sua escolha</li>
+            <li>3. ⭐: Foto do popo</li>
+            <li>4. 🍋: Um pedido</li>
+            <li>5. 🍉: Jantar a luz de telas</li>
+            <li>6. 7️⃣: Balada no Just Dance</li>
+        </ul>
+        <button onclick="drawPrize()">Sortear Número</button>
+    </div>
+
+    <script>
+        const symbols = ['🍒', '🔔', '⭐', '🍋', '🍉', '7️⃣'];
+        let counter = 0;
+
+        function getRandomSymbol() {
+            return symbols[Math.floor(Math.random() * symbols.length)];
+        }
+
+        function showPopup() {
+            document.getElementById('prizePopup').style.display = 'block';
+        }
+
+        function closePopup() {
+            document.getElementById('prizePopup').style.display = 'none';
+        }
+
+        function playSlotMachine() {
+            closePopup();
+            const slot1 = document.getElementById('slot1');
+            const slot2 = document.getElementById('slot2');
+            const slot3 = document.getElementById('slot3');
+
+            let tries = 0;
+            const startTime = Date.now();
+            const interval = setInterval(() => {
+                tries++;
+                slot1.textContent = getRandomSymbol();
+                slot2.textContent = getRandomSymbol();
+                slot3.textContent = getRandomSymbol();
+
+                const elapsedTime = (Date.now() - startTime) / 1000;
+                if (elapsedTime >= 5) {
+                    clearInterval(interval);
+                    if (slot1.textContent === slot2.textContent && slot2.textContent === slot3.textContent) {
+                        alert('Parabéns, grande prêmio!');
+                        counter = 0;
+                    } else {
+                        counter++;
+                        document.getElementById('counter').textContent = `Contador: ${counter}`;
+                        alert('Tempo esgotado! Aqui está o resultado final.');
+
+                        if (counter === 10) {
+                            showPrizeWindow();
+                        }
+                    }
+                }
+            }, 100);
+        }
+
+        function showPrizeWindow() {
+            document.getElementById('prizeWindow').style.display = 'block';
+        }
+
+        function drawPrize() {
+            const prizeNumber = Math.floor(Math.random() * 6) + 1;
+            alert(`Você ganhou o prêmio número ${prizeNumber}!`);
+        }
+    </script>
+</body>
+</html>
